@@ -82,3 +82,37 @@
   animation: pulse-ring 2.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
 }
 
+/* Animated Tree Canopy for Shaded Routes */
+@keyframes tree-sway {
+  0%, 100% {
+    transform: rotate(0deg) scale(1);
+  }
+  25% {
+    transform: rotate(-7deg) scale(1.08);
+  }
+  75% {
+    transform: rotate(7deg) scale(1.08);
+  }
+}
+
+@keyframes canopy-pulse {
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(16, 185, 129, 0.6), 0 0 20px rgba(5, 150, 105, 0.3);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(16, 185, 129, 0.9), 0 0 30px rgba(5, 150, 105, 0.6);
+    transform: scale(1.1);
+  }
+}
+
+.tree-sway-anim {
+  display: inline-block;
+  animation: tree-sway 2.5s ease-in-out infinite;
+  transform-origin: bottom center;
+}
+
+.canopy-pulse-badge {
+  animation: canopy-pulse 2s ease-in-out infinite;
+}
+

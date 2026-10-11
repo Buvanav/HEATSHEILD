@@ -1,5 +1,5 @@
 // src/components/Header.jsx
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Flame, 
   MapPin, 
@@ -12,7 +12,11 @@ import {
   HardHat, 
   HeartHandshake, 
   GraduationCap, 
-  Building
+  Building,
+  Mic,
+  Volume2,
+  VolumeX,
+  Clock
 } from 'lucide-react';
 import { translations } from '../i18n/translations';
 import { isMockMode } from '../api/api';
@@ -31,9 +35,25 @@ export default function Header({
   lang, 
   setLang, 
   profile, 
-  setProfile 
+  setProfile,
+  onOpenVoice,
+  isMuted,
+  onToggleMute
 }) {
   const t = translations[lang] || translations.en;
+  const [liveTime, setLiveTime] = useState(new Date());
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setLiveTime(new Date());
+    }, 1000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const timeString = liveTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true });
+
+  const activeProfileObj = PROFILES.find(p => p.id === profile) || PROFILES[0];
+  const ProfileIcon = activeProfileObj.icon;
 
   return (
     <header className="bg-slate-900 border-b border-slate-800 sticky top-0 z-40 px-3 py-2.5 sm:px-6">
@@ -60,14 +80,44 @@ export default function Header({
                   </span>
                 )}
               </div>
-              <p className="text-xs text-slate-400 font-normal">
-                {t.subTitle} (T. Nagar - Guindy)
-              </p>
+              {/* Dynamic Live Time Status instead of static 500m wording */}
+              <div className="flex items-center gap-2 mt-0.5 text-xs">
+                <span className="flex items-center gap-1.5 font-semibold text-emerald-400">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                  <span className="font-mono">{timeString} IST</span>
+                </span>
+                <span className="text-slate-600">•</span>
+                <span className="text-slate-400 font-medium flex items-center gap-1 text-[11px]">
+                  <ProfileIcon className="w-3 h-3 text-amber-400" />
+                  <span>{t.profiles[profile]} Mode</span>
+                </span>
+              </div>
             </div>
           </div>
 
-          {/* Language Toggle for Mobile */}
+          {/* Mobile Quick Action Buttons */}
           <div className="flex md:hidden items-center gap-1.5">
+            <button
+              onClick={onToggleMute}
+              className={`px-2 py-1.5 rounded-md border text-xs font-semibold flex items-center gap-1 transition-colors ${
+                isMuted
+                  ? 'bg-rose-950/80 border-rose-700 text-rose-300'
+                  : 'bg-slate-800 border-slate-700 text-slate-300'
+              }`}
+              title={isMuted ? "Click to Unmute" : "Click to Mute"}
+            >
+              {isMuted ? <VolumeX className="w-3.5 h-3.5 text-rose-400" /> : <Volume2 className="w-3.5 h-3.5 text-emerald-400" />}
+            </button>
+
+            <button
+              onClick={onOpenVoice}
+              className="px-2.5 py-1.5 rounded-md bg-emerald-600/20 hover:bg-emerald-600/30 text-xs font-semibold text-emerald-300 border border-emerald-500/40 flex items-center gap-1 transition-colors"
+              aria-label="Open Voice Assistant"
+            >
+              <Mic className="w-3.5 h-3.5 text-emerald-400" />
+              <span>{lang === 'ta' ? 'குரல்' : 'Voice'}</span>
+            </button>
+
             <button
               onClick={() => setLang(lang === 'en' ? 'ta' : 'en')}
               className="px-2.5 py-1.5 rounded-md bg-slate-800 hover:bg-slate-700 text-xs font-medium text-slate-200 border border-slate-700 flex items-center gap-1.5 transition-colors"
@@ -150,6 +200,30 @@ export default function Header({
               <UserCheck className="w-3.5 h-3.5 text-emerald-400 absolute left-2.5 top-2.5 pointer-events-none" />
               <div className="absolute right-2 top-2.5 pointer-events-none text-slate-400 text-[9px]">▼</div>
             </div>
+
+            {/* Voice Assistant Trigger */}
+            <button
+              onClick={onOpenVoice}
+              className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-md bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-300 border border-emerald-500/40 transition-all shadow-sm active:scale-95 min-h-[34px] group"
+              title="Open Voice Assistant / குரல் உதவி"
+            >
+              <Mic className="w-3.5 h-3.5 text-emerald-400 group-hover:animate-pulse" />
+              <span className="font-semibold text-xs">{lang === 'ta' ? 'குரல் உதவி' : 'Voice AI'}</span>
+            </button>
+
+            {/* Universal Mute/Unmute Audio Toggle */}
+            <button
+              onClick={onToggleMute}
+              className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-md border text-xs font-semibold transition-all shadow-sm active:scale-95 min-h-[34px] ${
+                isMuted
+                  ? 'bg-rose-950/80 border-rose-700 text-rose-300'
+                  : 'bg-slate-800 hover:bg-slate-700 border-slate-700 text-slate-300'
+              }`}
+              title={isMuted ? "Audio Muted - Click to Unmute" : "Audio Active - Click to Mute"}
+            >
+              {isMuted ? <VolumeX className="w-3.5 h-3.5 text-rose-400" /> : <Volume2 className="w-3.5 h-3.5 text-emerald-400" />}
+              <span>{isMuted ? (lang === 'ta' ? 'அமைதி' : 'Muted') : (lang === 'ta' ? 'ஒலி' : 'Sound')}</span>
+            </button>
 
             {/* Desktop Language Switcher */}
             <button

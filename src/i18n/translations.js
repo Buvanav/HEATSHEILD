@@ -92,6 +92,26 @@ export const translations = {
       elderly: "Remain indoors in ventilated or air-conditioned rooms. High humidity restricts sweat evaporation; monitor heart rate.",
       child: "Cancel outdoor activities during peak hours. Ensure hydration with fresh coconut water or oral rehydration solution.",
       office: "Heat stress is manageable during transit hours. Carry water bottle for short walks to metro or bus stops.",
+    },
+
+    voice: {
+      buttonTitle: "AI Voice Assistant",
+      listening: "Listening...",
+      speakPrompt: "Ask anything about Chennai heat risk or routes",
+      examplesTitle: "Try saying:",
+      examples: [
+        "What is the heat risk in T. Nagar?",
+        "Find coolest route to Guindy",
+        "Show drinking water points",
+        "Switch to laborer profile"
+      ],
+      listenAdvisory: "Listen to Advice",
+      stopAdvisory: "Stop Audio",
+      listenDirections: "Listen to Directions",
+      stopDirections: "Stop Audio",
+      unsupported: "Speech recognition not supported in this browser. Please use Chrome or Edge.",
+      processing: "Processing command...",
+      recognized: "You said:"
     }
   },
 
@@ -188,6 +208,26 @@ export const translations = {
       elderly: "காற்றோட்டமான அல்லது குளிரூட்டப்பட்ட அறைகளுக்குள்ளேயே இருக்கவும். அதிக ஈரப்பதம் வியர்வை ஆவியாவதைத் தடுக்கும்.",
       child: "வெப்பத்தின் உச்ச நேரத்தில் வெளிப்புற விளையாட்டுகளைத் தவிர்க்கவும். இளநீர் அல்லது ORS நீர் வழங்கவும்.",
       office: "பயண நேரங்களில் மட்டும் வெப்ப கவனம் தேவை. பஸ்/மெட்ரோ நிலையங்களுக்கு நடக்கும்போது தண்ணீர் பாட்டில் வைத்திருக்கவும்.",
+    },
+
+    voice: {
+      buttonTitle: "குரல் உதவி (Voice AI)",
+      listening: "கேட்கிறது... பேசவும்",
+      speakPrompt: "சென்னை வெப்ப அபாயம் அல்லது வழிகளைப் பற்றி கேளுங்கள்",
+      examplesTitle: "இப்படிப் பேசிப் பாருங்கள்:",
+      examples: [
+        "டி நகரில் வெப்பம் என்ன?",
+        "கிண்டிக்கு குளிர்ந்த வழி காட்டு",
+        "குடிநீர் நிலையங்கள் எங்கே?",
+        "தொழிலாளி சுயவிவரம் மாற்று"
+      ],
+      listenAdvisory: "ஆலோசனை கேளுங்கள்",
+      stopAdvisory: "நிறுத்துக",
+      listenDirections: "வழிகளைக் கேளுங்கள்",
+      stopDirections: "நிறுத்துக",
+      unsupported: "உங்கள் உலாவியில் குரல் அறிதல் ஆதரிக்கப்படவில்லை.",
+      processing: "கட்டளை செயலாக்கப்படுகிறது...",
+      recognized: "நீங்கள் கூறியது:"
     }
   }
 };

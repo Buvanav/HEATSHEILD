@@ -1,9 +1,18 @@
-// src/components/AdviceCard.jsx
-import React from 'react';
-import { AlertTriangle, ShieldCheck, Thermometer, TreeDeciduous, Building, Clock, X } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { AlertTriangle, ShieldCheck, Thermometer, TreeDeciduous, Building, Clock, X, Camera, Volume2, VolumeX } from 'lucide-react';
 import { translations } from '../i18n/translations';
+import { speakText, stopSpeaking } from '../services/voiceService';
 
-export default function AdviceCard({ cell, riskDetails, lang, onClose, profile }) {
+export default function AdviceCard({ cell, riskDetails, lang, onClose, profile, onOpenStreetView }) {
+  const [isSpeaking, setIsSpeaking] = useState(false);
+
+  useEffect(() => {
+    // Stop speaking if card unmounts or cell changes
+    return () => {
+      stopSpeaking();
+    };
+  }, [cell]);
+
   if (!cell && !riskDetails) return null;
 
   const t = translations[lang] || translations.en;
@@ -115,13 +124,60 @@ export default function AdviceCard({ cell, riskDetails, lang, onClose, profile }
         </div>
       </div>
 
-      {/* 2-Sentence Actionable Advice */}
-      <div className="flex items-start gap-2.5 bg-slate-950 p-2.5 rounded-lg border border-slate-800">
-        <BandIcon className={`w-4 h-4 ${style.text} flex-shrink-0 mt-0.5`} />
-        <p className="text-xs leading-relaxed text-slate-300 font-normal">
-          {adviceText}
-        </p>
+      {/* 2-Sentence Actionable Advice with Audio Voice Readout */}
+      <div className="flex flex-col gap-2 bg-slate-950 p-2.5 rounded-lg border border-slate-800">
+        <div className="flex items-start justify-between gap-2">
+          <div className="flex items-start gap-2">
+            <BandIcon className={`w-4 h-4 ${style.text} flex-shrink-0 mt-0.5`} />
+            <p className="text-xs leading-relaxed text-slate-300 font-normal">
+              {adviceText}
+            </p>
+          </div>
+        </div>
+
+        {/* Listen to Advisory Audio Button */}
+        <button
+          onClick={() => {
+            if (isSpeaking) {
+              stopSpeaking();
+              setIsSpeaking(false);
+            } else {
+              setIsSpeaking(true);
+              speakText(adviceText, lang, () => setIsSpeaking(false));
+            }
+          }}
+          className={`self-start mt-0.5 px-2.5 py-1 rounded-md text-[11px] font-semibold border flex items-center gap-1.5 transition-all ${
+            isSpeaking 
+              ? 'bg-rose-950/80 border-rose-700 text-rose-300 animate-pulse'
+              : 'bg-emerald-950/60 hover:bg-emerald-900 border-emerald-700/60 text-emerald-300'
+          }`}
+          title={isSpeaking ? (t.voice?.stopAdvisory || 'Stop Audio') : (t.voice?.listenAdvisory || 'Listen to Advisory')}
+        >
+          {isSpeaking ? (
+            <>
+              <VolumeX className="w-3.5 h-3.5 text-rose-400" />
+              <span>{t.voice?.stopAdvisory || 'Stop Audio'}</span>
+            </>
+          ) : (
+            <>
+              <Volume2 className="w-3.5 h-3.5 text-emerald-400" />
+              <span>{t.voice?.listenAdvisory || 'Listen to Advisory'}</span>
+            </>
+          )}
+        </button>
       </div>
+
+      {/* Street View Inspection Button */}
+      {onOpenStreetView && (
+        <button
+          onClick={() => onOpenStreetView(cell)}
+          className="w-full py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs text-slate-200 font-semibold border border-slate-700 flex items-center justify-center gap-1.5 transition-colors shadow-sm"
+        >
+          <Camera className="w-3.5 h-3.5 text-rose-400" />
+          <span>📷 Open 360° Street View Heat Inspection</span>
+        </button>
+      )}
+
 
     </div>
   );
