@@ -1,0 +1,186 @@
+[
+  {
+    "id": "poi_1",
+    "name": "Guindy National Park Shade Area",
+    "type": "park",
+    "lat": 13.003,
+    "lon": 80.222,
+    "cell_id": "r3c5"
+  },
+  {
+    "id": "poi_2",
+    "name": "Panagal Park Cooling Tree Canopy",
+    "type": "park",
+    "lat": 13.04,
+    "lon": 80.231,
+    "cell_id": "r9c7"
+  },
+  {
+    "id": "poi_3",
+    "name": "Semmozhi Poonga Botanical Garden",
+    "type": "park",
+    "lat": 13.051,
+    "lon": 80.251,
+    "cell_id": "r12c10"
+  },
+  {
+    "id": "poi_4",
+    "name": "Chetpet Eco Park Promenade",
+    "type": "park",
+    "lat": 13.069,
+    "lon": 80.241,
+    "cell_id": "r14c8"
+  },
+  {
+    "id": "poi_5",
+    "name": "Anna Nagar Tower Park Canopy",
+    "type": "park",
+    "lat": 13.086,
+    "lon": 80.214,
+    "cell_id": "r14c4"
+  },
+  {
+    "id": "poi_6",
+    "name": "Marina Beach Promenade Cooling Zone",
+    "type": "park",
+    "lat": 13.053,
+    "lon": 80.282,
+    "cell_id": "r12c14"
+  },
+  {
+    "id": "poi_7",
+    "name": "Gill Nagar Park Choolaimedu",
+    "type": "park",
+    "lat": 13.061,
+    "lon": 80.224,
+    "cell_id": "r13c5"
+  },
+  {
+    "id": "poi_8",
+    "name": "Nageswara Rao Park Mylapore",
+    "type": "park",
+    "lat": 13.033,
+    "lon": 80.264,
+    "cell_id": "r8c12"
+  },
+  {
+    "id": "poi_9",
+    "name": "Saidapet Metro Hydration Booth",
+    "type": "water_point",
+    "lat": 13.024,
+    "lon": 80.221,
+    "cell_id": "r7c5"
+  },
+  {
+    "id": "poi_10",
+    "name": "T. Nagar Ranganathan St Water Station",
+    "lat": 13.042,
+    "lon": 80.228,
+    "cell_id": "r10c6",
+    "type": "water_point"
+  },
+  {
+    "id": "poi_11",
+    "name": "Koyambedu CMBT Hydration Kiosk",
+    "type": "water_point",
+    "lat": 13.069,
+    "lon": 80.198,
+    "cell_id": "r14c1"
+  },
+  {
+    "id": "poi_12",
+    "name": "Chennai Central Water Fountain Hub",
+    "type": "water_point",
+    "lat": 13.082,
+    "lon": 80.275,
+    "cell_id": "r14c14"
+  },
+  {
+    "id": "poi_13",
+    "name": "Egmore Railway Stn Hydration Point",
+    "type": "water_point",
+    "lat": 13.078,
+    "lon": 80.261,
+    "cell_id": "r14c12"
+  },
+  {
+    "id": "poi_14",
+    "name": "Marina Beach Light House Water Point",
+    "type": "water_point",
+    "lat": 13.04,
+    "lon": 80.28,
+    "cell_id": "r9c14"
+  },
+  {
+    "id": "poi_15",
+    "name": "T. Nagar Bus Terminus AC Waiting Hall",
+    "type": "cooling_shelter",
+    "lat": 13.041,
+    "lon": 80.233,
+    "cell_id": "r10c7"
+  },
+  {
+    "id": "poi_16",
+    "name": "Guindy Multi-Modal Cooling Shelter",
+    "type": "cooling_shelter",
+    "lat": 13.009,
+    "lon": 80.213,
+    "cell_id": "r4c3"
+  },
+  {
+    "id": "poi_17",
+    "name": "Koyambedu Bus Terminus Passenger Shelter",
+    "type": "cooling_shelter",
+    "lat": 13.07,
+    "lon": 80.205,
+    "cell_id": "r14c2"
+  },
+  {
+    "id": "poi_18",
+    "name": "Vadapalani Metro Cooling Shelter",
+    "type": "cooling_shelter",
+    "lat": 13.051,
+    "lon": 80.212,
+    "cell_id": "r12c3"
+  },
+  {
+    "id": "poi_19",
+    "name": "Rajiv Gandhi Govt General Hospital",
+    "type": "hospital",
+    "lat": 13.08,
+    "lon": 80.277,
+    "cell_id": "r14c14"
+  },
+  {
+    "id": "poi_20",
+    "name": "Kalaignar Centenary Super Speciality",
+    "type": "hospital",
+    "lat": 13.007,
+    "lon": 80.214,
+    "cell_id": "r4c4"
+  },
+  {
+    "id": "poi_21",
+    "name": "Kilpauk Medical College Hospital",
+    "type": "hospital",
+    "lat": 13.081,
+    "lon": 80.244,
+    "cell_id": "r14c9"
+  },
+  {
+    "id": "poi_22",
+    "name": "Government Royapettah Hospital",
+    "type": "hospital",
+    "lat": 13.056,
+    "lon": 80.261,
+    "cell_id": "r12c12"
+  },
+  {
+    "id": "poi_23",
+    "name": "Saidapet Government Hospital",
+    "type": "hospital",
+    "lat": 13.018,
+    "lon": 80.221,
+    "cell_id": "r6c5"
+  }
+]

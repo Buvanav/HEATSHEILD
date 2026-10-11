@@ -1,0 +1,12 @@
+# SAM Configuration file for heatshield-backend
+version = 0.1
+
+[default]
+[default.deploy]
+[default.deploy.parameters]
+stack_name = "heatshield-backend"
+s3_prefix = "heatshield-backend"
+region = "ap-southeast-2"
+confirm_changeset = false
+capabilities = "CAPABILITY_IAM"
+image_repositories = []

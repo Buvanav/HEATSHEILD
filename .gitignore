@@ -1,0 +1,42 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Production build outputs
+dist/
+dist-ssr/
+build/
+*.local
+
+# Environment & Secrets (NEVER commit live secrets)
+.env
+.env*.local
+*.env
+!.env.example
+
+# Python virtual environments & bytecode cache
+.venv/
+venv/
+ENV/
+env/
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.coverage
+htmlcov/
+
+# AWS SAM & Lambda build artifacts
+.aws-sam/
+build_lambda/
+*.zip
+*.msi
+
+# IDE, Editor, and OS metadata
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*.swo

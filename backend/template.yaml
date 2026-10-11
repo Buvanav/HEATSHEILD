@@ -1,0 +1,121 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: HeatShield Chennai Backend - Hyperlocal Heat Risk API & Alert System
+
+Parameters:
+  SensorTableName:
+    Type: String
+    Default: sensor_readings
+    Description: Name of the existing sensor readings DynamoDB table
+  ScoresTableName:
+    Type: String
+    Default: cell_scores
+    Description: Name of the existing cell scores DynamoDB table
+  DataBucketName:
+    Type: String
+    Default: heatshield-data-bucket-chennai
+    Description: Name of the existing S3 data bucket
+  AlertTopicArn:
+    Type: String
+    Default: arn:aws:sns:ap-southeast-2:956614410298:heatshield-alerts
+    Description: ARN of the existing SNS alerts topic
+
+Globals:
+  Function:
+    Runtime: python3.12
+    MemorySize: 512
+    Timeout: 20
+    Environment:
+      Variables:
+        SENSOR_TABLE: !Ref SensorTableName
+        SCORES_TABLE: !Ref ScoresTableName
+        DATA_BUCKET: !Ref DataBucketName
+        SNS_TOPIC_ARN: !Ref AlertTopicArn
+        USE_MOCK_STORE: "false"
+        ALERT_THRESHOLD: "80"
+
+Resources:
+  Api:
+    Type: AWS::Serverless::HttpApi
+    Properties:
+      CorsConfiguration:
+        AllowOrigins:
+          - "*"
+        AllowMethods:
+          - GET
+          - POST
+          - OPTIONS
+        AllowHeaders:
+          - "*"
+        MaxAge: 600
+
+  ApiFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri:
+        Bucket: heatshield-data-bucket-chennai
+        Key: lambda/backend.zip
+      Handler: app.main.handler
+      Events:
+        AnyProxy:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref Api
+            Path: /{proxy+}
+            Method: ANY
+        Root:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref Api
+            Path: /
+            Method: GET
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref SensorTableName
+        - DynamoDBCrudPolicy:
+            TableName: !Ref ScoresTableName
+        - S3ReadPolicy:
+            BucketName: !Ref DataBucketName
+        - SNSPublishMessagePolicy:
+            TopicName: heatshield-alerts
+        - Statement:
+            - Effect: Allow
+              Action:
+                - bedrock:InvokeModel
+              Resource: "*"
+
+  RefreshFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri:
+        Bucket: heatshield-data-bucket-chennai
+        Key: lambda/backend.zip
+      Handler: refresh.handler
+      Timeout: 60
+      Events:
+        HourlyRefresh:
+          Type: ScheduleV2
+          Properties:
+            ScheduleExpression: "rate(1 hour)"
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref SensorTableName
+        - DynamoDBCrudPolicy:
+            TableName: !Ref ScoresTableName
+        - S3ReadPolicy:
+            BucketName: !Ref DataBucketName
+        - SNSPublishMessagePolicy:
+            TopicName: heatshield-alerts
+
+Outputs:
+  ApiUrl:
+    Description: HTTP API Gateway endpoint URL for HeatShield Chennai
+    Value: !Sub "https://${Api}.execute-api.${AWS::Region}.amazonaws.com"
+  SensorTableName:
+    Value: !Ref SensorTableName
+  ScoresTableName:
+    Value: !Ref ScoresTableName
+  DataBucketName:
+    Value: !Ref DataBucketName
+  AlertTopicArn:
+    Value: !Ref AlertTopicArn
